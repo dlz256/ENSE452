@@ -1,0 +1,189 @@
+﻿Self Assessment Questionnaire
+ENSE 452
+Sept 9, 2023
+Dillan Zurowski
+
+
+
+
+1. (7 pts) Using the name abc, declare abc as each of the following C data
+types:
+(a) an unsigned integer
+unsigned int a;
+(b) a pointer to a signed character
+char *a;
+(c) an array of 10 unsigned integers
+unsigned int a[10];
+(d) an array of 10 pointers to unsigned characters
+unsigned char *a[10];
+(e) a pointer to an array of 10 unsigned integers
+unsigned char *a[10];
+(f) a pointer to a function that takes a float as an argument, and returns
+a boolean.
+bool (*a)(float);
+(g) a pointer to a volatile unsigned integer
+volatile unsigned int *a;
+
+
+2. 
+(a) the missing parts of the C code (8pts)
+ro=n
+r1=result
+r2=i
+
+
+whatsit proc
+ mov r1,#0        r1=0
+ mov r2,#0        r2=0
+ loop
+ add r3,r1,r1        r3=0+0
+ and r1,r0,#1        r1=least significant bit of r1
+ orr r1,r1,r3        result=result+bit 1(1 or 0)
+ lsr r0,r0,#1        n/2
+ add r2,r2,#1        i=i+1
+ cmp r2,#32        if i=32
+ blt loop        then break
+ mov r0,r1        else n=result
+ bx lr                end loop
+ endp
+
+
+int result = 0;
+int i;
+for(int i=0; i<32; i++)
+{
+b3=result*2
+result= n&1
+result=result | b3
+n=n/2
+}
+
+
+(b) the purpose of the function; what does it do? (2pts)
+The function returns the reverse of the bits of input n
+
+
+
+
+3. See bitset.cpp
+#include <iostream>
+#include <cstdint> // Include the cstdint header
+#include <bitset> // Include the bitset header
+
+
+using namespace std;
+
+
+void bitSet(uint32_t *address, int);
+
+
+void main()
+{
+    bitSet( reinterpret_cast<uint32_t*>(0x1100DEEC), 14);
+}
+
+
+/*
+    set a specific bit of an address to 1
+*/
+void bitSet( uint32_t *address, int location)
+{
+    uintptr_t addressValue = reinterpret_cast<uintptr_t>(address);
+    bitset<32> addressArray = bitset<32>(addressValue);
+    cout << "Binary address: " << addressArray << endl;
+    cout << "Decimal address: " << addressValue << endl;
+    cout << "Bit at location " << location << ": " << addressArray[location-1] << endl;
+
+
+    addressArray.set(location-1);
+    cout << "Bit at location " << location << ": " << addressArray[location-1] << endl;
+    cout << "Binary address: " << addressArray << endl;
+}
+
+
+4. See arraySort.cpp
+#include <iostream>
+
+
+using namespace std;
+int BinarySearch(int array[], int size, int value);
+
+
+int main()
+{
+    int array[] = {1, 2, 4, 5, 6, 7, 8};
+    int target = 8;
+    int size = sizeof(array);
+    cout << BinarySearch(array, size, target);
+    return 1;
+}
+
+
+int BinarySearch(int array[], int size, int target)
+{
+    int left = 0;
+    int right = size -1;
+
+
+    while(left<=right)
+    {
+        int mid = left + (right-left)/2;
+        if (array[mid] == target)
+            return mid;
+        else if (array[mid] < target)
+            left = mid+1;
+        else
+            right = mid-1;
+    }
+    return -1;
+}
+
+
+
+
+5. 
+Prediction:
+n = *p;       n = 0 as it is the start of the array
+n = *p++;   n = 0 as the index is printed then incremented 
+n = *++p;   n = 20 as the index is incremented from 1 first then printed
+n = *(p++); n = 20 as it prints first then increments
+n = (*p)++; n = 30 as it prints before adding 1, after adding 1it is 31
+n = *p;       n = 31
+
+
+
+
+Actual:
+n=0
+n=0
+n=20
+n=20
+n=30
+n=31
+
+
+6. (10 pts) For the items defined in the following code snippet, give examples
+of items which would be stored in
+• the BSS section
+        Int a as it is declared but not initialized
+• the Data section
+        Int b and c as it is declared and initialized
+• the Text section
+The function f is the text section as it is the main executable code
+• the Heap
+The memory for int *pi is stored in the heap
+• the Stack
+aa , dd and e are stored in the stack as it is within function f
+• a Register
+Function parameters are stored in registers so aa is r0 and dd is r1
+
+
+
+
+7. 4 pts Briefly, describe the largest software system that you have personally
+built. Was the work done for a class, a job, or just for the joy of it?
+The hardest software system that I worked on was my final project for ENEL 351. For this project we had to use both analog and digital inputs and outputs using STM32 microcontrollers. This was mainly challenging as the learning curve was very steep and the progression of complexity was fast, however I became satisfied with it as a lot of concepts that I didn’t understand from the lectures became easier as I used it in this project. For this project I created a binary calculator using pushbuttons and potentiometers to change the colour/frequency of the LED’s.
+
+
+8. 4 pts What do you hope to gain from this class?
+I hope to gain better knowledge of embedded systems and microcontrollers as well as learn how to write better code as there has not been a lot of emhphasis on the quality of code so far.
