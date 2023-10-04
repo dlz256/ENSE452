@@ -13,3 +13,6 @@ Filter on other: ./A1 < mycommands.txt 1> output.txt 2> junk.txt
 
 Using the built in filter commands, the program will read from mycommands.txt,
 output only the results to output.txt, then any other text to junk.txt
+
+Additional error code:5 failed to convert to double
+This occurs when coverting from the input string to a double.
