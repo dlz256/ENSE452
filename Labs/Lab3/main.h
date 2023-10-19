@@ -14,4 +14,3 @@
 //uint8_t receivedCharFlag;
 //uint8_t receivedChar;
 
-void GPIOInit();
