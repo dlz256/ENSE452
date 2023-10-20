@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>Lab3</OutputName>
+          <OutputName>Lab3TD</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -323,13 +323,13 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>5</v6Lang>
+            <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -385,39 +385,34 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>cli.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Lab2\cli.cpp</FilePath>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\main.c</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Lab2\main.cpp</FilePath>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\usart.c</FilePath>
             </File>
             <File>
-              <FileName>usart.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\Lab2\usart.cpp</FilePath>
+              <FileName>cli.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\cli.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>include</GroupName>
+          <GroupName>lib</GroupName>
           <Files>
-            <File>
-              <FileName>cli.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Lab2\cli.h</FilePath>
-            </File>
-            <File>
-              <FileName>main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Lab2\main.h</FilePath>
-            </File>
             <File>
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Lab2\usart.h</FilePath>
+              <FilePath>.\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>cli.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\cli.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -434,14 +429,14 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.5.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS">
-        <package name="STM32F1xx_DFP" schemaVersion="1.7.2" url="https://www.keil.com/pack/" vendor="Keil" version="2.4.1"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.7.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.4.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
