@@ -1,3 +1,10 @@
+/*
+	ENSE 452 Lab3
+	Dillan Zurowski
+	200431334
+	This lab utilizes the USART interup handler
+*/
+
 #include "stm32f10x.h"
 
 #include "usart.h"
@@ -13,21 +20,21 @@ uint8_t characterReceived;
 void serial_open(void){
 		
 	  //Enable Port A clock
-	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-	//Enable the USART 2 Clock
-	RCC->APB1ENR |= RCC_APB1ENR_USART2EN; //enable USART2 clock
+		RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+		//Enable the USART 2 Clock
+		RCC->APB1ENR |= RCC_APB1ENR_USART2EN; //enable USART2 clock
+		
+		// Configure USART2 TX (PA2) as output and RX (PA3)  as input
+		// Bit pattern for TX is MODE = 11 and CNF is 10 Alternate Function output
+		// Bit pattern for RX is MODE = 00 and CNF is 10
+		// Configure the USART2 pins (PA2 = TX, PA3 = RX)
+		GPIOA->CRL &= ~(GPIO_CRL_CNF2 | GPIO_CRL_MODE2 | GPIO_CRL_CNF3 | GPIO_CRL_MODE3);
+		GPIOA->CRL |= (GPIO_CRL_CNF2_1 | GPIO_CRL_MODE2 | GPIO_CRL_CNF3_1);
+		
+		// Configure pin PA5 as a general-purpose output push-pull
+		GPIOA->CRL &= ~(GPIO_CRL_CNF5_0 | GPIO_CRL_CNF5_1);
+		GPIOA->CRL |= (GPIO_CRL_MODE5_0 | GPIO_CRL_MODE5_1);
 	
-	// Configure USART2 TX (PA2) as output and RX (PA3)  as input
-	// Bit pattern for TX is MODE = 11 and CNF is 10 Alternate Function output
-	// Bit pattern for RX is MODE = 00 and CNF is 10
-	// Configure the USART2 pins (PA2 = TX, PA3 = RX)
-  GPIOA->CRL &= ~(GPIO_CRL_CNF2 | GPIO_CRL_MODE2 | GPIO_CRL_CNF3 | GPIO_CRL_MODE3);
-  GPIOA->CRL |= (GPIO_CRL_CNF2_1 | GPIO_CRL_MODE2 | GPIO_CRL_CNF3_1);
-	
-	// Configure pin PA5 as a general-purpose output push-pull
-	GPIOA->CRL &= ~(GPIO_CRL_CNF5_0 | GPIO_CRL_CNF5_1);
-	GPIOA->CRL |= (GPIO_CRL_MODE5_0 | GPIO_CRL_MODE5_1);
-	  // Enable the USART Tx and Rx in the USART Control register.
 
 		//Configure USART 2 for 115200 bps, 8-bits-no parity, 1 stop bit. (Peripheral clock is 36MHz).
 		// Set baud rate to 115200 bps
@@ -42,11 +49,10 @@ void serial_open(void){
 		
 		// Enable the interrupt in NVIC
 		//NVIC_SetPriority(USART2_IRQn, 0);
-//		NVIC_EnableIRQ(TIM2_IRQn);
+		NVIC_EnableIRQ(TIM2_IRQn);
 	
 		USART2->CR1 |= USART_CR1_RXNEIE;  // Enable RXNE interrupt
-
-
+	  // Enable the USART Tx and Rx in the USART Control register.
 
 		USART2->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE; //enable
 
@@ -58,49 +64,49 @@ void serial_open(void){
 		TIM2->PSC = 35999;
 
 		// Set the auto-reload value to achieve a 1s delay
-		TIM2->ARR = 1;
+		TIM2->ARR = 50000;
 
 		// Enable the update interrupt
 		TIM2->DIER |= TIM_DIER_UIE;
 
 		// Enable the timer
 		TIM2->CR1 |= TIM_CR1_CEN;
-		//ISER
-		//NVIC->ISER[0] = 1<<7; //enable IRQ7 (bit 7 of ISER[0]
 		
 
 			
 }
 
 int sendbyte(uint8_t b) {
-    // Set the timeout in Timer2
-//    TIM2->ARR = Timeout; // Assuming the timer is configured to count microseconds
-
-//    // Start the Timer
-//    TIM2->CR1 |= TIM_CR1_CEN;
+	
+    TIM2->SR &= ~TIM_SR_UIF;  // Clear the update flag
+	
+    // Start the Timer
+    TIM2->CR1 |= TIM_CR1_CEN;
+		TIM2->CNT = 0; // Reset the timer counter
 
     while (!(USART2->SR & USART_SR_TXE)) {
-//        // Check for timeout
-//        if (TIM2->SR & TIM_SR_UIF) {
-//            TIM2->SR &= ~TIM_SR_UIF;  // Clear the update flag
-//            TIM2->CR1 &= ~TIM_CR1_CEN;  // Stop the timer
-//            return 1;  // Timeout error
-//        }
+        // Check for timeout
+        if (TIM2->SR & TIM_SR_UIF) {
+            TIM2->SR &= ~TIM_SR_UIF;  // Clear the update flag
+            TIM2->CR1 &= ~TIM_CR1_CEN;  // Stop the timer
+            return 1;  // Timeout error
+        }
     }
 
     USART2->DR = b & 0xFF; // Load the character to be transmitted into the data register
 
     // Wait for the transmission to complete
-//    while (!(USART2->SR & USART_SR_TC)) {
-//        // Check for timeout
-//        if (TIM2->SR & TIM_SR_UIF) {
-//            TIM2->SR &= ~TIM_SR_UIF;  // Clear the update flag
-//            TIM2->CR1 &= ~TIM_CR1_CEN;  // Stop the timer
-//            return 1;  // Timeout error
-//        }
-//    }
-//    // Stop the Timer
-//    TIM2->CR1 &= ~TIM_CR1_CEN;
+    while (!(USART2->SR & USART_SR_TC)) {
+        // Check for timeout
+        if (TIM2->SR & TIM_SR_UIF) {
+            TIM2->SR &= ~TIM_SR_UIF;  // Clear the update flag
+            TIM2->CR1 &= ~TIM_CR1_CEN;  // Stop the timer
+            return 1;  // Timeout error
+        }
+    }
+    // Stop the Timer
+    TIM2->CR1 &= ~TIM_CR1_CEN;
+		TIM2->CNT = 0; // Reset the timer counter
 
     return 0; // Successful transmission
 }
