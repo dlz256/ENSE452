@@ -410,14 +410,14 @@
               <FilePath>.\main.h</FilePath>
             </File>
             <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\usart.h</FilePath>
-            </File>
-            <File>
               <FileName>cli.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\cli.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\usart.h</FilePath>
             </File>
           </Files>
         </Group>
