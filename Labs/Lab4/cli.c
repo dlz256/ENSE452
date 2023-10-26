@@ -62,9 +62,22 @@ int CLI_Receive(uint8_t *input, uint16_t size) {
 				CLI_Transmit(ANSI_RESTORE_CURSOR, sizeof(ANSI_RESTORE_CURSOR));	//restore cursor to middle
 
 			}
+			else if (strcmp(inputString, (const char *)"status") == 0)
+			{
+				if (GPIOA ->ODR & (1 << 5))
+				{
+					const char status_stmt[] = "\r\nStatus: The LED is on"; 
+					CLI_Transmit(status_stmt, sizeof(status_stmt));
+				}
+				else
+				{
+					const char status_stmt[] = "\r\nStatus: The LED is off"; 
+					CLI_Transmit(status_stmt, sizeof(status_stmt));
+				}
+			}
 			else if (strcmp(inputString, (const char *)"help") == 0)
 			{
-				const char help_stmt[] = "\r\n'on' to turn the LED on\r\n'off' to turn the LED off\r\n'Quit' to close connection"; 
+				const char help_stmt[] = "\r\n'on' to turn the LED on\r\n'off' to turn the LED off\r\n'status' to view status of LED\r\n'Quit' to close connection"; 
 				CLI_Transmit(help_stmt, sizeof(help_stmt));
 			}
 			else if (strcmp(inputString, (const char *)"quit") == 0)
