@@ -2,7 +2,11 @@
 	ENSE 452 Lab5
 	Dillan Zurowski
 	200431334
-	This lab utilizes the USART interup handler
+	-Main task (blinks the LED at a certain rate)
+	-CLI task that updates the terminal and receives characters from the 
+	USART2 ISR from a Queue and sends to the Main task (via Queue) to 
+	change the frequency of the Blinky light.
+	-in the USART2 ISR send the data via Queues from FreeRTOS.
 */
 
 #include "stm32f10x.h"
@@ -39,9 +43,7 @@ void serial_open(void){
 	
 
 		//Configure USART 2 for 115200 bps, 8-bits-no parity, 1 stop bit. (Peripheral clock is 36MHz).
-		// Set baud rate to 115200 bps
 		USART2->BRR = (19 <<4) | (9 & 0xF);
-
 		// Configure data format: 8 bits, no parity, 1 stop bit
 		USART2->CR1 &= ~USART_CR1_M; // 8 data bits
 		USART2->CR1 &= ~USART_CR1_PCE; // No parity
@@ -123,17 +125,12 @@ void serial_close(void)
 // USART2 interrupt service routine
 void USART2_IRQHandler(void) {
     if (USART2->SR & USART_SR_RXNE) {
-        // USART2 received data interrupt
-
+			
         // Read the received data from USART2_DR register
         uint8_t characterReceived = USART2->DR;
-			  characterFlag = 1;
 				xQueueSendToFrontFromISR(CLIQueue, &characterReceived, NULL);
-        // Process the received data as needed
 
         // Clear the RXNE flag (optional, but recommended)
         USART2->SR &= ~USART_SR_RXNE;
     }
-
-    // Add more conditions for other USART2 interrupt sources if needed
 }

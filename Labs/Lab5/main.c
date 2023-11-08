@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include "main.h"
 
-extern int characterFlag;
+static int frequency;
 extern char inputString[10]; // Declare and initialize a character array to store the input string
 extern QueueHandle_t freqQueue;
 extern QueueHandle_t CLIQueue;
@@ -26,7 +26,7 @@ int main(void)
 {	
 	serial_open();
 
-	freqQueue = xQueueCreate(3, sizeof(char));
+	freqQueue = xQueueCreate(1, sizeof(int));
 	CLIQueue = xQueueCreate(3, sizeof(char));
 	
 	xTaskCreate(vBlinkTask, "Blinky", configMINIMAL_STACK_SIZE, NULL, mainBLINKY_TASK_PRIORITY, NULL); 
@@ -39,21 +39,18 @@ while(1){}
 
 static void vBlinkTask(void * parameters)
 {
-		int frequency;
-		int defaultFrequency = 1000;
-		BaseType_t xStatus = xQueueReceive(freqQueue, &frequency, 0);
-		if( xStatus == pdPASS )	//if received new value from the queue
-		{
-			frequency = (int)pdMS_TO_TICKS(frequency);	//frequency is the new value
-		}
-		else frequency = defaultFrequency;		//otherwise the frequency is the default
-		for (;;)
-		{
-			GPIOA->BSRR |= GPIO_BSRR_BS5;		
-			vTaskDelay((TickType_t)frequency);
-			GPIOA->BSRR |= GPIO_BSRR_BR5;		
-			vTaskDelay((TickType_t)frequency);
-		}
+	frequency = 500;
+	for (;;)
+	{
+		if( uxQueueMessagesWaiting( freqQueue ) != 0 )		
+		{			
+			xQueueReceive(freqQueue, &frequency, 100);
+		}		
+		GPIOA->BSRR |= GPIO_BSRR_BS5;		
+		vTaskDelay(pdMS_TO_TICKS(frequency));
+		GPIOA->BSRR |= GPIO_BSRR_BR5;		
+		vTaskDelay((pdMS_TO_TICKS(frequency)));
+	}
 }
 	
 static void vCLITask(void * parameters)
@@ -61,34 +58,25 @@ static void vCLITask(void * parameters)
 		CLI_Transmit((uint8_t *)ANSI_SCROLL_REGION, sizeof(ANSI_SCROLL_REGION));	//set scroll window
     CLI_Transmit((uint8_t *)ANSI_CLEAR_SCREEN, sizeof(ANSI_CLEAR_SCREEN));		//clear the screen in case previous messages were printed
     CLI_Transmit((uint8_t *)ANSI_MOVE_CURSOR_TOP, sizeof(ANSI_MOVE_CURSOR_TOP));		//move the cursor to the top to set default message
-	
 
-		const char statement[] = "The LED is Turned OFF";
+	const char statement[] = "The LED is flashing\r\nSelect one of 3 options: 'f1', 'f2', or 'f3'";
 		CLI_Transmit(statement, sizeof(statement));						//display the status of the board, defaults to off
-	
 	
     CLI_Transmit((uint8_t *)ANSI_MOVE_CURSOR_MIDDLE, sizeof(ANSI_MOVE_CURSOR_MIDDLE));		//move the cursor to the scroll window in the middle
 		
-		const char welcomeMessage[] = "\r\nEnter command(help for more info): ";		//start welcome message
+		const char welcomeMessage[] = "\r\nEnter command(help for more info):";		//start welcome message
 		CLI_Transmit(welcomeMessage, sizeof(welcomeMessage));
-		
-		TickType_t lastWakeTime = xTaskGetTickCount();
-		BaseType_t xStatus;
-		uint8_t characterReceived = NULL;
-		while(1)
-		{
-				if(characterFlag == 1)	//check if global flag is received
-				{		
-						xStatus = xQueueReceive(CLIQueue, &characterReceived, portMAX_DELAY);
-						if( xStatus == pdPASS )
-						{
-							sendbyte(characterReceived);				//send received character
-							CLI_Receive(&characterReceived, 1);	//process character
-							characterFlag= 0;										//SET the flag back to 0
-						}
-						//vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS( 250 ));
-				}
-			vTaskDelayUntil(&lastWakeTime, pdMS_TO_TICKS( 100 ));
 
-		} 
+		
+	uint8_t characterReceived;
+	for (;;)
+	{
+		BaseType_t xStatus = xQueueReceive(CLIQueue, &characterReceived, portMAX_DELAY);
+		if( xStatus == pdPASS )
+		{
+			sendbyte(characterReceived);				//send received character
+			CLI_Receive(&characterReceived, 1);	//process character
+		}		
+	}
+
 }
