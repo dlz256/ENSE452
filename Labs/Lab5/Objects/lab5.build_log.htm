@@ -1,0 +1,331 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Dillan Zurowski, uofr, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.38.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.19
+Assembler:       Armasm.exe V6.19
+Linker/Locator:  ArmLink.exe V6.19
+Library Manager: ArmAr.exe V6.19
+Hex Converter:   FromElf.exe V6.19
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+C:\Users\dzuro\OneDrive\Documents\Fall23\ENSE452-Embed\ENSE452\Labs\Lab5\lab5.uvprojx
+Project File Date:  11/06/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Rebuild target 'Target 1'
+compiling clib_arm.c...
+cli.c(9): warning: In file included from...
+./cli.h(9): warning: In file included from...
+./usart.h(6): warning: In file included from...
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+cli.c(14): warning: no previous extern declaration for non-static variable 'inputString' [-Wmissing-variable-declarations]
+char inputString[10] = ""; // Declare and initialize a character array to store the input string
+     ^
+cli.c(14): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char inputString[10] = ""; // Declare and initialize a character array to store the input string
+^
+cli.c(28): warning: implicit conversion changes signedness: 'unsigned int' to 'int' [-Wsign-conversion]
+                int inputLength = strlen(inputString);
+                    ~~~~~~~~~~~   ^~~~~~~~~~~~~~~~~~~
+cli.c(43): warning: passing 'const char[21]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(LED_on_stmt, sizeof(LED_on_stmt));
+                                             ^~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(49): warning: passing 'const char[21]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(statement, sizeof(statement));                                                                                                     //send message to top
+                                             ^~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(42): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+                                const char LED_on_stmt[] = "\r\nThe LED is now on!"; 
+                                           ^
+cli.c(57): warning: passing 'const char[22]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(LED_off_stmt, sizeof(LED_off_stmt));
+                                             ^~~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(63): warning: passing 'const char[22]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(statement, sizeof(statement));                                                                                                     //send message to top
+                                             ^~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(56): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+                                const char LED_off_stmt[] = "\r\nThe LED is now off!"; 
+                                           ^
+cli.c(73): warning: passing 'const char[24]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                        CLI_Transmit(status_stmt, sizeof(status_stmt));
+                                                     ^~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(78): warning: passing 'const char[25]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                        CLI_Transmit(status_stmt, sizeof(status_stmt));
+                                                     ^~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(84): warning: passing 'const char[113]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(help_stmt, sizeof(help_stmt));
+                                             ^~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(89): warning: passing 'const char[28]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(close_stmt, sizeof(close_stmt));
+                                             ^~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(95): warning: passing 'const char[31]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(frequency_stmt, sizeof(frequency_stmt));
+                                             ^~~~~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(101): warning: passing 'const char[32]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(frequency_stmt, sizeof(frequency_stmt));
+                                             ^~~~~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(108): warning: passing 'const char[32]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                                CLI_Transmit(frequency_stmt, sizeof(frequency_stmt));
+                                             ^~~~~~~~~~~~~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(117): warning: passing 'const char[37]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                        CLI_Transmit(str, sizeof(str));
+                                     ^~~
+cli.c(17): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t *pData, uint16_t size) {
+                           ^
+cli.c(116): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+                        const char str[] = "\r\nEnter command(help for more info):"; 
+                                   ^
+cli.c(26): warning: unused parameter 'size' [-Wunused-parameter]
+void CLI_Receive(uint8_t *input, uint16_t size) {
+                                          ^
+cli.c(121): warning: comparison of integers of different signs: 'int' and 'unsigned int' [-Wsign-compare]
+                        if (inputLength < sizeof(inputString) - 1) {
+                            ~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~
+cli.c(13): warning: no previous extern declaration for non-static variable 'freqQueue' [-Wmissing-variable-declarations]
+QueueHandle_t freqQueue;
+              ^
+cli.c(13): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+QueueHandle_t freqQueue;
+^
+23 warnings generated.
+compiling cli.c...
+usart.c(8): warning: In file included from...
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+usart.c(129): warning: implicit conversion loses integer precision: 'volatile uint16_t' (aka 'volatile unsigned short') to 'uint8_t' (aka 'unsigned char') [-Wimplicit-int-conversion]
+        uint8_t characterReceived = USART2->DR;
+                ~~~~~~~~~~~~~~~~~   ~~~~~~~~^~
+usart.c(19): warning: no previous extern declaration for non-static variable 'characterFlag' [-Wmissing-variable-declarations]
+int characterFlag;
+    ^
+usart.c(19): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int characterFlag;
+^
+usart.c(20): warning: no previous extern declaration for non-static variable 'CLIQueue' [-Wmissing-variable-declarations]
+QueueHandle_t CLIQueue;
+              ^
+usart.c(20): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+QueueHandle_t CLIQueue;
+^
+6 warnings generated.
+compiling usart.c...
+main.c(12): warning: In file included from...
+C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include\FreeRTOS.h(59): warning: In file included from...
+./RTE/RTOS\FreeRTOSConfig.h(46): warning: In file included from...
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+main.c(40): warning: unused parameter 'parameters' [-Wunused-parameter]
+static void vBlinkTask(void * parameters)
+                              ^
+main.c(41): warning: function 'vBlinkTask' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+main.c(67): warning: passing 'const char[22]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                CLI_Transmit(statement, sizeof(statement));                                             //display the status of the board, defaults to off
+                             ^~~~~~~~~
+./cli.h(24): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t* pData, uint16_t Size);
+                           ^
+main.c(73): warning: passing 'const char[38]' to parameter of type 'uint8_t *' (aka 'unsigned char *') discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+                CLI_Transmit(welcomeMessage, sizeof(welcomeMessage));
+                             ^~~~~~~~~~~~~~
+./cli.h(24): note: passing argument to parameter 'pData' here
+void CLI_Transmit(uint8_t* pData, uint16_t Size);
+                           ^
+main.c(66): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+                const char statement[] = "The LED is Turned OFF";
+                           ^
+main.c(59): warning: unused parameter 'parameters' [-Wunused-parameter]
+static void vCLITask(void * parameters)
+                            ^
+main.c(60): warning: function 'vCLITask' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+{
+^
+10 warnings generated.
+compiling main.c...
+compiling cmsis_os2.c...
+compiling os_systick.c...
+assembling startup_stm32f10x_md.s...
+compiling freertos_evr.c...
+compiling croutine.c...
+compiling system_stm32f10x.c...
+compiling event_groups.c...
+compiling list.c...
+compiling port.c...
+compiling heap_4.c...
+compiling queue.c...
+compiling stream_buffer.c...
+compiling timers.c...
+compiling tasks.c...
+linking...
+Program Size: Code=14776 RO-data=808 RW-data=8 ZI-data=12816  
+".\Objects\lab5.axf" - 0 Error(s), 39 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: RTOS2 Version: 2.1.3
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: ARM
+                https://www.keil.com/pack/ARM.CMSIS-FreeRTOS.10.5.1.pack
+                ARM.CMSIS-FreeRTOS.10.5.1
+                Bundle of FreeRTOS for Cortex-M and Cortex-A
+   * Component: Config Variant: CMSIS RTOS2 Version: 10.5.1
+   * Component: Core Variant: Cortex-M Version: 10.5.1
+   * Component: Coroutines Version: 10.5.1
+   * Component: Event Groups Version: 10.5.1
+   * Component: Heap Variant: Heap_4 Version: 10.5.1
+   * Component: Message Buffer Version: 10.5.1
+   * Component: Stream Buffer Version: 10.5.1
+   * Component: Timers Version: 10.5.1
+   * Component: FreeRTOS Variant: Cortex-M Version: 10.5.1
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.1.pack
+                Keil.STM32F1xx_DFP.2.4.1
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/Device/STM32F103RB
+  ./RTE/RTOS
+  ./RTE/_Target_1
+  C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include
+  C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include
+  C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3
+  C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/dzuro/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/RTOS2/Include
+  C:/Users/dzuro/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ::CMSIS:RTOS2:2.1.3 (API)
+      Include file:  CMSIS/RTOS2/Include/cmsis_os2.h
+
+   * Component: ARM.FreeRTOS::RTOS:Config:CMSIS RTOS2:10.5.1
+      Include file:  CMSIS/RTOS2/FreeRTOS/Config/ARMCM/FreeRTOSConfig.h
+
+   * Component: ARM.FreeRTOS::RTOS:Core:Cortex-M:10.5.1
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/freertos_evr.c
+      Source file:   Source/tasks.c
+      Include file:  Source/include/semphr.h
+      Include file:  Source/include/FreeRTOS.h
+      Include file:  Source/include/queue.h
+      Include file:  Source/include/task.h
+      Source file:   Source/queue.c
+      Source file:   Source/list.c
+      Source file:   Source/portable/GCC/ARM_CM3/port.c
+
+   * Component: ARM.FreeRTOS::RTOS:Coroutines:10.5.1
+      Include file:  Source/include/croutine.h
+      Source file:   Source/croutine.c
+
+   * Component: ARM.FreeRTOS::RTOS:Event Groups:10.5.1
+      Source file:   Source/event_groups.c
+      Include file:  Source/include/event_groups.h
+
+   * Component: ARM.FreeRTOS::RTOS:Heap:Heap_4:10.5.1
+      Source file:   Source/portable/MemMang/heap_4.c
+
+   * Component: ARM.FreeRTOS::RTOS:Message Buffer:10.5.1
+      Source file:   Source/stream_buffer.c
+      Include file:  Source/include/message_buffer.h
+
+   * Component: ARM.FreeRTOS::RTOS:Stream Buffer:10.5.1
+      Source file:   Source/stream_buffer.c
+      Include file:  Source/include/stream_buffer.h
+
+   * Component: ARM.FreeRTOS::RTOS:Timers:10.5.1
+      Source file:   Source/timers.c
+      Include file:  Source/include/timers.h
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: ARM::CMSIS:RTOS2:FreeRTOS:Cortex-M:10.5.1
+      Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/ARM/clib_arm.c
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/os_systick.c
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Source file:   Device/Source/system_stm32f10x.c
+      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
+      Include file:  RTE_Driver/Config/RTE_Device.h
+Build Time Elapsed:  00:00:03
+</pre>
+</body>
+</html>
