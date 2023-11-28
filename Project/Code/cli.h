@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "FreeRTOS.h"
+#include "semphr.h"    
 
 void EXTI15_10_IRQHandler(void);
 

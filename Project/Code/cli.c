@@ -17,6 +17,8 @@ QueueHandle_t floorQueue;
 QueueHandle_t arrivedQueue;
 QueueHandle_t EmergencyStopQueue;
 QueueHandle_t doorQueue;
+SemaphoreHandle_t floorSemaphore;
+
 
 static char inputString[10] = ""; // Declare and initialize a character array to store the input string
 static int EmergencyFlag;
@@ -45,12 +47,6 @@ void CLI_Receive(uint8_t *input, uint16_t size) {
 		}		
 		else if (input[0] == 0x0D)	//if the enter button was clicked
 		{     
-			//up - send 'u' or 'd' to directionQueue
-			//select floor	- send to floorQueue
-			//door close - print and send to elevator control
-			//open door (after receiving message from elevator that it has arrived)
-			//end
-			
 		//if direction selected, then can check for floor queue
 		if (strcmp(inputString, (const char *)"up") == 0)
 		{
@@ -58,9 +54,8 @@ void CLI_Receive(uint8_t *input, uint16_t size) {
 			{
 				direction = 'u';
 				xQueueSendToFront(directionQueue, &direction, portMAX_DELAY);
-				const char str[] = "\r\n'close' door:"; 
-				CLI_Transmit((uint8_t *)str, sizeof(str));
-				
+				const char str[] = "\r\nDoor closed!\r\nEnter a floor number(1-8):"; 
+				CLI_Transmit((uint8_t *)str, sizeof(str));	
 			}
 		}
 		//down case, decrement
@@ -70,55 +65,31 @@ void CLI_Receive(uint8_t *input, uint16_t size) {
 			{
 				direction = 'd';
 				xQueueSendToFront(directionQueue, &direction, portMAX_DELAY);
-				const char str[] = "\r\n'close' door:"; 
-				CLI_Transmit((uint8_t *)str, sizeof(str));			
+				const char str[] = "\r\nDoor closed!\r\nEnter a floor number(1-8):"; 
+				CLI_Transmit((uint8_t *)str, sizeof(str));				
 			}						
 		}
-		//open/close door
-//		else if (strcmp(inputString, (const char *)"close") == 0)
-//		{
-//			if( uxQueueMessagesWaiting( doorQueue ) == 0 )	//check if doorState has already been selected
-//			{
-//				int doorState = 1;
-//				xQueueSendToFront(doorQueue, &doorState, portMAX_DELAY);
-//				const char str[] = "\r\nEnter a floor number(1-8):"; 
-//				CLI_Transmit((uint8_t *)str, sizeof(str));				
-//			}						
-//		}
-//		else if (strcmp(inputString, (const char *)"open") == 0)
-//		{
-//			if( uxQueueMessagesWaiting( doorQueue ) == 0 )	//check if doorState has already been selected
-//			{
-//				int doorState = 0;
-//				xQueueSendToFront(doorQueue, &doorState, portMAX_DELAY);
-//				const char str[] = "\r\nLeaving Elevator, starting over:";
-//				CLI_Transmit((uint8_t *)str, sizeof(str));								
-//			}
-//		}
-		
 		else if (atoi(inputString) >= 1 && atoi(inputString) <= 8)
 		{
 			if( uxQueueMessagesWaiting( floorQueue ) == 0 )	//check if floor has already been selected
 			{				
 				int floor = atoi(inputString);
 				xQueueSendToFront(floorQueue, &floor, portMAX_DELAY);		
-				char statement[26];
-				snprintf(statement, sizeof(statement), "\r\nTravelling to floor: %d", floor);
-				
+				char statement[27];
+				snprintf(statement, sizeof(statement), "\r\nTravelling to floor: %d", floor);				
 				CLI_Transmit((uint8_t *)statement, sizeof(statement));			
-				xQueueReceive(floorQueue, &current_floor, portMAX_DELAY);		//receive confirmation that floor has been reached
-				if (current_floor ==floor)	
+				
+				if (xSemaphoreTake(floorSemaphore, portMAX_DELAY) == pdTRUE) {
+				
+				if (current_floor == floor)	
 				{
-					const char str[] = "\r\nArrived! 'open' the door."; 
-					CLI_Transmit((uint8_t *)str, sizeof(str));
+					const char arrived_msg[] = "\r\nArrived! Opening door...\r\nEnter 'up' or 'down' to select direction"; 
+					CLI_Transmit((uint8_t *)arrived_msg, sizeof(arrived_msg));
 					int arrived = 0;
-					xQueueSendToFront(arrivedQueue, &arrived, portMAX_DELAY);		
-					CLI_Change_Floor_Number(current_floor);
-					
 				}
+			}
 			}						
-		}	
-			
+		}			
 			//restarting prompt and erase inutString
 			memset(inputString, 0, sizeof(inputString));
 			const char str[] = "\r\nEnter command:"; 

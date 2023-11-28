@@ -27,26 +27,26 @@ Project File Date:  11/09/2023
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
-compiling usart.c...
-compiling cli.c...
-compiling main.c...
 compiling clib_arm.c...
+compiling usart.c...
+compiling main.c...
+compiling cli.c...
 compiling os_systick.c...
-assembling startup_stm32f10x_md.s...
 compiling system_stm32f10x.c...
-compiling freertos_evr.c...
-compiling croutine.c...
 compiling cmsis_os2.c...
-compiling list.c...
-compiling heap_4.c...
-compiling port.c...
+assembling startup_stm32f10x_md.s...
+compiling croutine.c...
 compiling event_groups.c...
-compiling timers.c...
+compiling port.c...
+compiling list.c...
+compiling freertos_evr.c...
+compiling heap_4.c...
 compiling stream_buffer.c...
 compiling queue.c...
+compiling timers.c...
 compiling tasks.c...
 linking...
-Program Size: Code=22048 RO-data=1148 RW-data=8 ZI-data=13328  
+Program Size: Code=21988 RO-data=1232 RW-data=12 ZI-data=13328  
 ".\Objects\elevator_control_system.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -99,13 +99,13 @@ Package Vendor: Keil
 
    * Component: ARM.FreeRTOS::RTOS:Core:Cortex-M:10.5.1
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/freertos_evr.c
-      Source file:   Source/list.c
       Source file:   Source/tasks.c
       Include file:  Source/include/queue.h
       Include file:  Source/include/semphr.h
-      Include file:  Source/include/FreeRTOS.h
       Include file:  Source/include/task.h
+      Include file:  Source/include/FreeRTOS.h
       Source file:   Source/queue.c
+      Source file:   Source/list.c
       Source file:   Source/portable/GCC/ARM_CM3/port.c
 
    * Component: ARM.FreeRTOS::RTOS:Coroutines:10.5.1
@@ -113,38 +113,38 @@ Package Vendor: Keil
       Source file:   Source/croutine.c
 
    * Component: ARM.FreeRTOS::RTOS:Event Groups:10.5.1
-      Source file:   Source/event_groups.c
       Include file:  Source/include/event_groups.h
+      Source file:   Source/event_groups.c
 
    * Component: ARM.FreeRTOS::RTOS:Heap:Heap_4:10.5.1
       Source file:   Source/portable/MemMang/heap_4.c
 
    * Component: ARM.FreeRTOS::RTOS:Message Buffer:10.5.1
-      Source file:   Source/stream_buffer.c
       Include file:  Source/include/message_buffer.h
+      Source file:   Source/stream_buffer.c
 
    * Component: ARM.FreeRTOS::RTOS:Stream Buffer:10.5.1
       Include file:  Source/include/stream_buffer.h
       Source file:   Source/stream_buffer.c
 
    * Component: ARM.FreeRTOS::RTOS:Timers:10.5.1
-      Include file:  Source/include/timers.h
       Source file:   Source/timers.c
+      Include file:  Source/include/timers.h
 
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: ARM::CMSIS:RTOS2:FreeRTOS:Cortex-M:10.5.1
-      Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/ARM/clib_arm.c
-      Source file:   CMSIS/RTOS2/FreeRTOS/Source/os_systick.c
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
+      Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/os_systick.c
 
    * Component: Keil::Device:Startup:1.0.0
-      Include file:  RTE_Driver/Config/RTE_Device.h
-      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
       Source file:   Device/Source/system_stm32f10x.c
+      Include file:  RTE_Driver/Config/RTE_Device.h
       Source file:   Device/Source/ARM/STM32F1xx_OPT.s
-Build Time Elapsed:  00:00:05
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
